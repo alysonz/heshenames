@@ -2,18 +2,23 @@ import mysql.connector
 cnx = mysql.connector.connect(user='alyson', password='thetempleofwhollyness', host='localhost', database='heshenames')
 cursor = cnx.cursor()
 d = 1
-f = 1
 n = 1
-while d < 10:
+while d < 10000:
 #first take id from doanames 1-10
-	query3 = ("select name from doanames where id=%s;" %(f))
+	print d
+	query3 = ("select name from doanames where id=%s;" %(d))
 	cursor.execute(query3)
 	for name in cursor:
 		n = name
+		print n
 	query4 = ("select * from heshe where name='%s';" %(n))
 	cursor.execute(query4)
 	for name in cursor:
-		name
+		print name
+	query5 = ("select * from doafull where id=%s;" %(d))
+	cursor.execute(query5)
+	for name in cursor:
+		print name
 #	query = ("select id from doanames where id=%s;" %(d))
 #	cursor.execute(query)
 #	for name in cursor:
@@ -24,9 +29,9 @@ while d < 10:
 			#print full emp info
 #			print thing
 	d=d+1
-query2 = ("select * from heshe where rank=1")
-cursor.execute(query2)
-for rank in cursor:
-	print rank
+#query2 = ("select * from heshe where rank=1")
+#cursor.execute(query2)
+#for rank in cursor:
+#	print rank
 cursor.close()
 cnx.close()
