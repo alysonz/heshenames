@@ -9,6 +9,7 @@ for line in emp:
 	line = re.sub('.*, *','',line)
 	#find first tab or space, get rid of all text following it
 	line = re.sub('	.*| .*','',line)
+	line = re.sub('\'','', line)
 	names.append(line)
 empnames = open('doanames.txt','w')
 empnames.writelines(names)
