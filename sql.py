@@ -17,34 +17,25 @@ while d < 10:
 	query4 = ("select * from heshe where name='%s';" %(n))
 	cursor.execute(query4)
 	for that in cursor:
+		print that
 		f = that
+		print "taco"
+		print f
 	query5 = ("select * from doafull where id=%s;" %(d))
 	cursor.execute(query5)
 	for other in cursor:
 		k = other
 	data.append(k + f)
-#	query = ("select id from doanames where id=%s;" %(d))
-#	cursor.execute(query)
-#	for name in cursor:
-		#then use id to find full emp info within doafull
-#		query1 = ("select * from doafull where id=%s;" %(name))
-#		cursor.execute(query1)
-#		for thing in cursor:
-			#print full emp info
-#			print thing
 	d=d+1
+print data
+#a = []
+#b = []
+#query7 = 1
+#for line in data:
+#	a.append(list(line))
+#query6 = ("create table final (id int(10), dept varchar(40), fullname varchar(40), title varchar(40), salary int(10), first varchar(10), gender varchar(2), percent decimal(10,5), percentile decimal(10,5), rank int(10), first2 varchar(10), gender2 varchar(2), percent2 decimal(10,5), percentile2 decimal(10,5), rank2 int(10));")
+#cursor.execute(query6)
+#for line in a:
+#	query7 = ("insert into final (id, dept, fullname, title, salary, first, gender, percent, percentile, rank, first2, gender2, percent2, percentile2, rank2) values (%s);" % (line))
 cursor.close()
 cnx.close()
-l=[]
-print data
-for line in data:
-	for item in line:
-		l.append(item)
-print l
-for item in l:
-	item= re.sub('u', '', item)
-#heshenames.writelines(l)
-#query2 = ("select * from heshe where rank=1")
-#cursor.execute(query2)
-#for rank in cursor:
-#	print rank
