@@ -6,10 +6,8 @@ emp = emp.readlines()
 names = []
 for line in emp:
 	#find first comma, get rid of all text preceeding it
-	line = re.sub('.*, *','',line)
+	line = re.sub('\$','',line)
 	#find first tab or space, get rid of all text following it
-	line = re.sub('	.*| .*','',line)
-	line = re.sub('\'','', line)
 	names.append(line)
-empnames = open('doanames.txt','w')
+empnames = open('doafull.txt','w')
 empnames.writelines(names)
