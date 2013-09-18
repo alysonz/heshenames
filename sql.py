@@ -37,7 +37,6 @@ query7 = 1
 query6 = ("create table final (id int(10), dept varchar(40), name varchar(40), title varchar(40), salary decimal (10,5), first varchar(10), gender varchar(2), percent decimal(10,5), percentile decimal(10,5), rank int(10), first2 varchar(10), gender2 varchar(2), percent2 decimal(10,5), percentile2 decimal(10,5), rank2 int(10))")
 cursor.execute(query6)
 for line in data:
-	print line
 	if len(line) < 15:
 		line.extend(['none', 'none', '0.0', '0.0', '0'])
 	if len(line) < 15:
