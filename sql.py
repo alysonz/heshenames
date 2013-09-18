@@ -33,20 +33,21 @@ while d < 10:
 	d=d+1
 	f=[]
 	c=[]
-print data
 query7 = 1
 query6 = ("create table final (id int(10), dept varchar(40), name varchar(40), title varchar(40), salary decimal (10,5), first varchar(10), gender varchar(2), percent decimal(10,5), percentile decimal(10,5), rank int(10), first2 varchar(10), gender2 varchar(2), percent2 decimal(10,5), percentile2 decimal(10,5), rank2 int(10));")
 cursor.execute(query6)
 for line in data:
-	moop = len(line)
-	if moop < 15:
-		line.append(None)
-		line.append(None)
-		line.append(None)
-		line.append(None)
-		line.append(None)
-	print line[8]
-	query7 = ("insert into final (id, dept, name, title, salary, first, gender, percent, percentile, rank, first2, gender2, percent2, percentile2, rank2) values (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);" % (line[0], line[1], line[2], line[3], line[4], line[5], line[6], line[7], line[8], line[9], line[10], line[11], line[12], line[13], line[14]))
+	print line
+	if len(line) < 15:
+		line.extend(['none', 'none', 'none', 'none', 'none'])
+	if len(line) < 15:
+		line.extend(['none', 'none', 'none', 'none', 'none'])
+	if len(line) <> 15:
+		print line
+	query7 = ("insert into final values('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s');" % (line[0], line[1], line[2], line[3], line[4], line[5], line[6], line[7], line[8], line[9], line[10], line[11], line[12], line[13], line[14]))
 	cursor.execute(query7)
+query8 = ("insert into final values('1','Department of public works', 'Wildfire McGee', 'Badass', '132.40', 'Wildfire', 'F', '0.003', '3.02', '666', 'none', 'none', 'none', 'none', 'none');")
+cursor.execute(query8)
+print 'Success!'
 cursor.close()
 cnx.close()
