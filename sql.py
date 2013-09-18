@@ -47,9 +47,13 @@ for line in data:
 	query7 = ("insert into final values('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s');" % (line[0], line[1], line[2], line[3], line[4], line[5], line[6], line[7], line[8], line[9], line[10], line[11], line[12], line[13], line[14]))
 	cursor.execute(query7)
 # THIS IS A TEST, FOR THE LOVE OF GOD REMOVE IT BEFORE FINALIZING!!!!!!!!!!!!!!!!!!
-query8 = ("insert into final values('1','Department of public works', 'Wildfire McGee', 'Badass', '132.40', 'Wildfire', 'F', '0.003', '3.02', '666', 'none', 'none', 'none', 'none', 'none');")
+query8 = ("insert into final ('id', 'dept', 'name', 'title', 'salary', 'first', 'gender', 'percent', 'percentile', 'rank', 'first2', 'gender2', 'percent2', 'percentile2', 'rank2') values('1','Department of public works', 'Wildfire McGee', 'Badass', '132.40', 'Wildfire', 'F', '0.003', '3.02', '666', 'none', 'none', 'none', 'none', 'none');")
 cursor.execute(query8)
 # THIS IS A TEST, FOR THE LOVE OF GOD REMOVE IT BEFORE FINALIZING!!!!!!!!!!!!!!!!!!
+query9 = ("show grants;")
+cursor.execute(query9)
+for thing in cursor:
+	print thing
 print 'Success!'
 cursor.close()
 cnx.close()
