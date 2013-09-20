@@ -5,7 +5,7 @@ fem = open('female.txt', 'r')
 fem = fem.readlines()
 names = []
 for line in fem:
-	#find group:s of spaces and replace them with a comma
+	#find group:s of spaces and replace them with a tab
 	line = re.sub('  *','	',line)
 	names.append(line)
 femnames = open('femnames.txt','w')
