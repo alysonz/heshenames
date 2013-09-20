@@ -3,18 +3,20 @@ import re
 cnx = mysql.connector.connect(user='alyson', password='thetempleofwhollyness', host='localhost', database='heshenames')
 cursor = cnx.cursor()
 d = 1
-p = 0
-n = 0
+f = 0
+m = 0
 while d < 10:
-	cursor.execute("select percent from final where id=%d" %(d))
+	cursor.execute("select * from final where id=%d" %(d))
 	for line in cursor:
-		p = line
-	cursor.execute("select percent2 from final where id=%d" %(d))
+		print line
+	cursor.execute("select ((percent*3200000)/((percent2*3000000)+(percent*3200000)))*100, gender from final where id=%d" %(d))
 	for line in cursor:
-		n = line
-	p = str(p)
-	p = int(p)
-	n = int(n)
+		f = line
+	cursor.execute("select ((percent2*3000000)/((percent2*3000000)+(percent*3200000)))*100, gender2 from final where id=%d" %(d))
+	for line in cursor:
+		m = line
+	cursor.execute("s"
+	print "done"
 #		f.append(that)
 #		f=list(f)
 	#restore lists in list f as items in list c.
