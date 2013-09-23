@@ -1,14 +1,30 @@
 # WRITE SCRIPT/QUERY TO AVERAGE MALE/FEMALE SALARY FOR EVERY DISTINCT TITLE IN EVERY AGENCY AND FLAG TITLE/AGENCY W/LARGISH MALE/FEMALE SALARY DIFFERENCE
-
-
-
-
-
-
 import mysql.connector
 import re
 cnx = mysql.connector.connect(user='alyson', password='thetempleofwhollyness', host='localhost', database='heshenames')
 cursor = cnx.cursor()
+#find all distinct departments
+cursor.execute("select distinct dept from doagender")
+for line in cursor:
+	#for each distinct department, find all distinct titles
+	cursor.execute("select distinct title from doagender where dept =%s" , (line))
+	for line in cursor:
+		#average the salary for all employees of each distinct title in each department where the chance of being female is greater than 7 in 10
+		#HAVE NOT ACCOUNTED FOR INSTANCES WHERE ONLY FEMALE OR ONLY MALE
+		cursor.execute("select avg(salary) from doagender where title =%s and ((percent*3200000)/((percent2*3000000)+(percent*3200000)))*100 > 70", (line))
+		#average the salary for all employees of each distinct title in each department where the chance of being male is greater than 7 in 10
+		cursor.execute("select avg(salary) from doagender where title =%s and ((percent2*3000000)/((percent2*3000000)+(percent*3200000)))*100 > 70" , (line))
+		#find employees of each distinct title in each department where gender is in question
+		cursor.execute("select * from doagender where ((percent*3200000)/((percent2*3000000)+(percent*3200000)))<70 and ((percent*3200000)/((percent2*3000000)+(percent*3200000)))>30")
+		#find employees of each title in each department where there is no gender data
+		cursor.execute("select * from doagender where first = none")
+		
+		
+
+
+
+
+
 #set up variables. d as iterable id. n as doa name in query3 result. f as gender result list. c and k as list results. data as concatinated c and k.
 d = 1
 n = 1
