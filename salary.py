@@ -62,9 +62,14 @@ for line in cursor:
 		cursor.execute("select count(name) from doagender where dept=%s and title=%s and first='none';",(dept[0],title[0]))
 		for h in cursor:
 			print h
-		cursor.execute("select %s, %s where %i-%i>.5;",(dept[0],title[0],query1,query2))
+		#select dept and job title when the average male salary is at least $.50 more than the average female salary
+		cursor.execute("select %s, %s where %i-%i>.5;",(dept[0],title[0],query2,query1))
 		for i in cursor:
-			print list(i) + " FLAG!!!"
+			print list(i) + " FLAG!!! THE PATRIARCHY LIVES HERE!"
+		#select dept and job title when the average female salary is at least $.50 more than the average male salary
+		cursor.execute("select %s, %s where %i-%i>.5;",(dept[0],title[0],query1,query2))
+		for j in cursor:
+			print list(j) + " FLAG!!! THE MATRIARCHY LIVES HERE!"
 #create table to load list data information	
 #cursor.execute("create table final (id int(10), dept varchar(40), name varchar(40), title varchar(40), salary decimal (10,5), first varchar(10), gender varchar(2), percent decimal(10,5), percentile decimal(10,5), rank int(10), first2 varchar(10), gender2 varchar(2), percent2 decimal(10,5), percentile2 decimal(10,5), rank2 int(10))")
 #normalize lists within data to contain placeholders for every column in query6 table
