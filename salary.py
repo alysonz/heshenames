@@ -1,9 +1,8 @@
 # WRITE SCRIPT/QUERY TO AVERAGE MALE/FEMALE SALARY FOR EVERY DISTINCT TITLE IN EVERY AGENCY AND FLAG TITLE/AGENCY W/LARGISH MALE/FEMALE SALARY DIFFERENCE
-import mysql.connector
+import MySQLdb
 import re
-cnx = mysql.connector.connect(user='alyson', password='thetempleofwhollyness', host='localhost', database='heshenames')
-cursor = cnx.cursor()
-cursor2 = cnx.cursor(buffered=True)
+db = MySQLdb.connect(user='alyson', passwd='thetempleofwhollyness', db='heshenames')
+cursor= db.cursor()
 af = []
 am = []
 ab = 1
@@ -13,35 +12,45 @@ dept = 1
 #find all distinct departments
 cursor.execute("select distinct dept from doagender;")
 for line in cursor:
-	dept = line
-	print dept
+	dept = list(line)
 	#for each distinct department, find all distinct titles
-	cursor.execute("select distinct title from doagender where dept=%s;" , (dept))
+	cursor.execute("select distinct title from doagender where dept=%s;" , (dept[0]))
 	for a in cursor:
 		title = list(a)
 		#average the salary for all employees of each distinct title in each department where the chance of being female is greater than 7 in 10
-		#HAVE NOT ACCOUNTED FOR INSTANCES WHERE ONLY FEMALE OR ONLY MALE
-		cursor.execute("select avg(salary) from doagender where title =%s and ((percent*3200000)/((percent2*3000000)+(percent*3200000)))*100 > 70;", (title))
+		#HAVE ACCOUNTED FOR NAMES WHERE ONLY MALE DATA APPLIES
+		cursor.execute("select avg(salary) from doagender where dept=%s and title =%s and gender='F' and ((percent*3200000)/((percent2*3000000)+(percent*3200000)))*100 > 70;", (dept[0],title[0]))
 		for b in cursor:
-			af = af.append([list(b),'avg fem salary for ' + title[0]])
+			af=list(b)
+			print dept
+			print 'avg fem salary for ' + title[0]
+			print af
+		#count how many females have this job title in this department
+
 		#average the salary for all employees of each distinct title in each department where the chance of being male is greater than 7 in 10
-		#cursor.execute("select avg(salary) from doagender where title =%s and ((percent2*3000000)/((percent2*3000000)+(percent*3200000)))*100 > 70;" , (title))
-		#for c in cursor:
-		#	am = list(c)
-		#	print 'avg male salary for ' + title[0]
-		#	print am
+		#HAVE NOT ACCOUNTED FOR NAMES WHERE ONLY MALE DATA APPLIES
+		cursor.execute("select avg(salary) from doagender where dept=%s and title =%s and ((percent2*3000000)/((percent2*3000000)+(percent*3200000)))*100 > 70 or gender='M';" , (dept[0],title[0]))
+		for c in cursor:
+			am = list(c)
+			print 'avg male salary for ' + title[0]
+			print am
+		#count how many males have this job title in this department
+
 		#find employees of each distinct title in each department where gender is in question
-#		cursor.execute("select * from doagender where ((percent*3200000)/((percent2*3000000)+(percent*3200000)))<70 and ((percent*3200000)/((percent2*3000000)+(percent*3200000)))>30;")
-#		for line in cursor:
-#			ab = line
-#			print 'ambig gender for %s',(title)
-#			print ab
+		cursor.execute("select * from doagender where dept=%s and title=%s and ((percent*3200000)/((percent2*3000000)+(percent*3200000)))<70 and ((percent*3200000)/((percent2*3000000)+(percent*3200000)))>30;",(dept[0],title[0]))
+		for line in cursor:
+			ab = line
+			print 'ambig gender for %s',(title[0])
+			print ab
+		#count how many gender amb employees have this job title in this department
+
 		#find employees of each title in each department where there is no gender data
-#		cursor.execute("select * from doagender where first = 'none';")
-#		for line in cursor:
-#			no = line
-#			print 'no gender data for emp'
-#			print no
+		cursor.execute("select * from doagender where dept=%s and title=%s and first='none';",(dept[0],title[0]))
+		for line in cursor:
+			no = list(line)
+			print 'no gender data for emp'
+			print no
+		#count how many emp w/no gender info have this job title in this department
 		
 
 #create table to load list data information	
