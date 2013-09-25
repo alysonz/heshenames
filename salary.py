@@ -23,40 +23,28 @@ for line in cursor:
 		title = line
 		#average the salary for all employees of each distinct title in each department where the chance of being female is greater than 7 in 10
 		cursor.execute("select avg(salary) from doagender where dept=%s and title =%s and gender='F' and ((percent*3200000)/((percent2*3000000)+(percent*3200000)))*100 > 70;", (dept[0],title[0]))
-		for line in cursor:
-			averageFemaleSalary = line
+		averageFemaleSalary = cursor.fetchone()
 		#count how many females have this job title in this department
 		cursor.execute("select count(name) from doagender where dept=%s and title =%s and gender='F' and ((percent*3200000)/((percent2*3000000)+(percent*3200000)))*100 > 70;", (dept[0],title[0]))
-		for line in cursor:
-			countFemaleEmployees = line
+		countFemaleEmployees = cursor.fetchone()
 		#average the salary for all employees of each distinct title in each department where the chance of being male is greater than 7 in 10
 		cursor.execute("select avg(salary) from doagender where dept=%s and title =%s and (gender='M' or ((percent2*3000000)/((percent2*3000000)+(percent*3200000)))*100 > 70);" , (dept[0],title[0]))
-		for line in cursor:
-			averageMaleSalary = line
+		averageMaleSalary = cursor.fetchone()
 		#count how many males have this job title in this department
 		cursor.execute("select count(name) from doagender where dept=%s and title =%s and (gender='M' or ((percent2*3000000)/((percent2*3000000)+(percent*3200000)))*100 > 70);" , (dept[0],title[0    ]))
-		for line in cursor:
-			countMaleEmployees = line
+		countMaleEmployees = cursor.fetchone()
 		#find employees of each distinct title in each department where gender is in question
 		cursor.execute("select * from doagender where dept=%s and title=%s and ((percent*3200000)/((percent2*3000000)+(percent*3200000)))<70 and ((percent*3200000)/((percent2*3000000)+(percent*3200000)))>30;",(dept[0],title[0]))
-		for line in cursor:
-			line = list(line)
-			for item in line:
-				employeeGenderUnclear.append(item)
+		employeeGenderUnclear = cursor.fetchall()
 		#count how many gender amb employees have this job title in this department
 		cursor.execute("select count(name) from doagender where dept=%s and title=%s and ((percent*3200000)/((percent2*3000000)+(percent*3200000)))<70 and ((percent*3200000)/((percent2*3000000)+(percent*3200000)))>30;",(dept[0],title[0]))
-		for line in cursor:
-			countEmployeeGenderUnclear = line
+		countEmployeeGenderUnclear = cursor.fetchone()
 		#find employees of each title in each department where there is no gender data
 		cursor.execute("select * from doagender where dept=%s and title=%s and first='none';",(dept[0],title[0]))
-		for line in cursor:
-			line = list(line)
-			for item in line:	
-				noGenderData.append(item)
+		noGenderData = cursor.fetchall
 		#count how many emp w/no gender info have this job title in this department
 		cursor.execute("select count(name) from doagender where dept=%s and title=%s and first='none';",(dept[0],title[0]))
-		for line in cursor:
-			countNoGenderData = line
+		countNoGenderData = cursor.fetchone
 		#select dept and job title when the average male salary is at least $.50 more than the average female salary
 		if (averageMaleSalary[0]) and (averageFemaleSalary[0]) and (averageMaleSalary[0]-averageFemaleSalary[0] > .5):
 			print "FLAG!!! THE PATRIARCHY LIVES HERE!"
@@ -64,6 +52,8 @@ for line in cursor:
 			print "%s, %s" %(dept[0],title[0])
 			print "Female Salary  %s, Number employed %s" %(averageFemaleSalary, countFemaleEmployees)
 			print "Male Salary  %s, Number employed %s" %(averageMaleSalary, countMaleEmployees)
+			disparity = averageMaleSalary[0] - averageFemaleSalary[0]
+			print "Wage disparity = $%s" % (disparity)
 			#if there are any employees in that department with that job title with gender ambiguous names, return the number of such employees and their employee data
 			if countEmployeeGenderUnclear>0:
 				print "Gender unlear for %s employees:" % (countEmployeeGenderUnclear)
@@ -78,8 +68,10 @@ for line in cursor:
 			print "%s, %s" %(dept[0],title[0])
 			print "Male Salary  %s, Number employed %s" %(averageMaleSalary, countMaleEmployees)
 			print "Female Salary  %s, Number employed %s" %(averageFemaleSalary, countFemaleEmployees)
+			disparity = averageFemaleSalary[0] - averageMaleSalary[0]
+			print "Wage disparity = $%s" % (disparity)
 			if countEmployeeGenderUnclear>0:
-				print "Gender unlear for %s employees:" % (countEmployeeGenderUnclear)
+				print "Gender unclear for %s employees:" % (countEmployeeGenderUnclear)
 				print employeeGenderUnclear
 			if countNoGenderData>0:
 				print "No gender data for %s employees:" % (countNoGenderData)
