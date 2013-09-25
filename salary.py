@@ -72,8 +72,8 @@ for line in cursor:
 	#for each list within data, insert each item into each column in query6 table
 	#cursor.execute("insert into final (id, dept, name, title, salary, first, gender, percent, percentile, rank, first2, gender2, percent2, percentile2, rank2) values(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)" ,(line[0], line[1], line[2], line[3], line[4], line[5], line[6], line[7], line[8], line[9], line[10], line[11], line[12], line[13], line[14]))
 #write to heshenames database
-#cnx.commit()
+#db.commit()
 print af
 print 'Success!'
 cursor.close()
-cnx.close()
+db.close()
