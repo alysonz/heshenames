@@ -6,8 +6,8 @@ cursor= db.cursor()
 #find all distinct departments
 cursor.execute("select salary from doagender;")
 for line in cursor:
-	line = line + 500
-	print line
+	faggot = line[0] + 500
+	print faggot
 #db.commit()
 print 'Success!'
 cursor.close()
