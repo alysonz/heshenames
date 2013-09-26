@@ -13,6 +13,10 @@ noGenderData = []
 countNoGenderData = "you misspelled something somewhere"
 title = "you misspelled something somewhere"
 dept = "you misspelled something somewhere"
+patriarchy = []
+matriarchy = []
+#create table to load data
+cursor.execute("create table hierarchy (advantage varchar(1), dept varchar(40), title varchar(40), averageFemaleSalary decimal (10,5), countFemaleEmployees int(5), averageMaleSalary decimal(10,5), countMaleEmployees int(5), disparity decimal(10,5), countEmployeeGenderUnclear int(5), countNoGenderData int(5))")
 #find all distinct departments
 cursor.execute("select distinct dept from doagender;")
 for line in cursor:
@@ -34,58 +38,31 @@ for line in cursor:
 		cursor.execute("select count(name) from doagender where dept=%s and title =%s and (gender='M' or ((percent2*3000000)/((percent2*3000000)+(percent*3200000)))*100 > 70);" , (dept[0],title[0    ]))
 		countMaleEmployees = cursor.fetchone()
 		#find employees of each distinct title in each department where gender is in question
-		cursor.execute("select * from doagender where dept=%s and title=%s and ((percent*3200000)/((percent2*3000000)+(percent*3200000)))<70 and ((percent*3200000)/((percent2*3000000)+(percent*3200000)))>30;",(dept[0],title[0]))
+		cursor.execute("select id from doagender where dept=%s and title=%s and ((percent*3200000)/((percent2*3000000)+(percent*3200000)))*100<70 and ((percent*3200000)/((percent2*3000000)+(percent*3200000)))*100>30;",(dept[0],title[0]))
 		employeeGenderUnclear = cursor.fetchall()
 		#count how many gender amb employees have this job title in this department
-		cursor.execute("select count(name) from doagender where dept=%s and title=%s and ((percent*3200000)/((percent2*3000000)+(percent*3200000)))<70 and ((percent*3200000)/((percent2*3000000)+(percent*3200000)))>30;",(dept[0],title[0]))
+		cursor.execute("select count(name) from doagender where dept=%s and title=%s and ((percent*3200000)/((percent2*3000000)+(percent*3200000)))*100<70 and ((percent*3200000)/((percent2*3000000)+(percent*3200000)))*100>30;",(dept[0],title[0]))
 		countEmployeeGenderUnclear = cursor.fetchone()
 		#find employees of each title in each department where there is no gender data
-		cursor.execute("select * from doagender where dept=%s and title=%s and first='none';",(dept[0],title[0]))
+		cursor.execute("select id from doagender where dept=%s and title=%s and first='none';",(dept[0],title[0]))
 		noGenderData = cursor.fetchall()
 		#count how many emp w/no gender info have this job title in this department
 		cursor.execute("select count(name) from doagender where dept=%s and title=%s and first='none';",(dept[0],title[0]))
 		countNoGenderData = cursor.fetchone()
 		#select dept and job title when the average male salary is at least $.50 more than the average female salary
-		if (averageMaleSalary[0]) and (averageFemaleSalary[0]) and (averageMaleSalary[0]-averageFemaleSalary[0] > .5):
-			print "FLAG!!! THE PATRIARCHY LIVES HERE!"
-			#return offending department and job title with average female salary and average male salary
-			print "%s, %s" %(dept[0],title[0])
-			print "Female Salary  %s, Number employed %s" %(averageFemaleSalary, countFemaleEmployees)
-			print "Male Salary  %s, Number employed %s" %(averageMaleSalary, countMaleEmployees)
+		if (averageMaleSalary[0]) and (averageFemaleSalary[0]) and (averageMaleSalary[0]-averageFemaleSalary[0] > 0):
 			disparity = averageMaleSalary[0] - averageFemaleSalary[0]
-			print "Wage disparity = $%s" % (disparity)
-			#if there are any employees in that department with that job title with gender ambiguous names, return the number of such employees and their employee data
-			if countEmployeeGenderUnclear[0]!=0:
-				print "Gender unclear for %s employees:" % (countEmployeeGenderUnclear)
-				print employeeGenderUnclear
-			#if there are any employees in that department with that job title with no gender data, return the number of such employees and their employee data
-			if countNoGenderData[0]!=0:
-				print "No gender data for %s employees:" % (countNoGenderData)
-				print noGenderData
-		#repeat all for department and job titles when the average female salary is at least %.50 more than the average male salary
-		elif (averageMaleSalary[0]) and (averageFemaleSalary[0]) and (averageFemaleSalary[0]-averageMaleSalary[0] > .5):
-			print "FLAG!!! THE MATRIARCHY LIVES HERE!"
-			print "%s, %s" %(dept[0],title[0])
-			print "Male Salary  %s, Number employed %s" %(averageMaleSalary, countMaleEmployees)
-			print "Female Salary  %s, Number employed %s" %(averageFemaleSalary, countFemaleEmployees)
+			patriarchy.extend(['M',dept[0],title[0],averageFemaleSalary[0], countFemaleEmployees[0], averageMaleSalary[0], countMaleEmployees[0], disparity, countEmployeeGenderUnclear[0], countNoGenderData[0]])
+			cursor.execute("insert into hierarchy (advantage, dept, title, averageFemaleSalary, countFemaleEmployees, averageMaleSalary, countMaleEmployees, disparity, countEmployeeGenderUnclear, countNoGenderData) values(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)" ,(patriarchy[0], patriarchy[1], patriarchy[2], patriarchy[3], patriarchy[4], patriarchy[5], patriarchy[6], patriarchy[7], patriarchy[8], patriarchy[9]))
+		elif (averageMaleSalary[0]) and (averageFemaleSalary[0]) and (averageFemaleSalary[0]-averageMaleSalary[0] > 0):
 			disparity = averageFemaleSalary[0] - averageMaleSalary[0]
-			print "Wage disparity = $%s" % (disparity)
-			if countEmployeeGenderUnclear[0]!=0:
-				print "Gender unclear for %s employees:" % (countEmployeeGenderUnclear)
-				print employeeGenderUnclear
-			if countNoGenderData[0]!=0:
-				print "No gender data for %s employees:" % (countNoGenderData)
-				print noGenderData
+			matriarchy.extend(['F',dept[0],title[0],averageFemaleSalary[0], countFemaleEmployees[0], averageMaleSalary[0], countMaleEmployees[0], disparity, countEmployeeGenderUnclear[0], countNoGenderData[0]])
+			cursor.execute("insert into hierarchy (advantage, dept, title, averageFemaleSalary, countFemaleEmployees, averageMaleSalary, countMaleEmployees, disparity, countEmployeeGenderUnclear, countNoGenderData) values(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)" ,(matriarchy[0], matriarchy[1], matriarchy[2], matriarchy[3], matriarchy[4], matriarchy[5], matriarchy[6], matriarchy[7], matriarchy[8], matriarchy[9]))
 		#clear lists for next job title analysis
-		employeeGenderUnclear = []
-		noGenderData = []	
-#create table to load list data information	
-#cursor.execute("create table final (id int(10), dept varchar(40), name varchar(40), title varchar(40), salary decimal (10,5), first varchar(10), gender varchar(2), percent decimal(10,5), percentile decimal(10,5), rank int(10), first2 varchar(10), gender2 varchar(2), percent2 decimal(10,5), percentile2 decimal(10,5), rank2 int(10))")
-#normalize lists within data to contain placeholders for every column in query6 table
-	#for each list within data, insert each item into each column in query6 table
-	#cursor.execute("insert into final (id, dept, name, title, salary, first, gender, percent, percentile, rank, first2, gender2, percent2, percentile2, rank2) values(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)" ,(line[0], line[1], line[2], line[3], line[4], line[5], line[6], line[7], line[8], line[9], line[10], line[11], line[12], line[13], line[14]))
+		patriarchy = []
+		matriarchy = []	
 #write to heshenames database
-#db.commit()
+db.commit()
 print 'Success!'
 cursor.close()
 db.close()
