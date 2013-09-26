@@ -41,10 +41,10 @@ for line in cursor:
 		countEmployeeGenderUnclear = cursor.fetchone()
 		#find employees of each title in each department where there is no gender data
 		cursor.execute("select * from doagender where dept=%s and title=%s and first='none';",(dept[0],title[0]))
-		noGenderData = cursor.fetchall
+		noGenderData = cursor.fetchall()
 		#count how many emp w/no gender info have this job title in this department
 		cursor.execute("select count(name) from doagender where dept=%s and title=%s and first='none';",(dept[0],title[0]))
-		countNoGenderData = cursor.fetchone
+		countNoGenderData = cursor.fetchone()
 		#select dept and job title when the average male salary is at least $.50 more than the average female salary
 		if (averageMaleSalary[0]) and (averageFemaleSalary[0]) and (averageMaleSalary[0]-averageFemaleSalary[0] > .5):
 			print "FLAG!!! THE PATRIARCHY LIVES HERE!"
@@ -55,25 +55,25 @@ for line in cursor:
 			disparity = averageMaleSalary[0] - averageFemaleSalary[0]
 			print "Wage disparity = $%s" % (disparity)
 			#if there are any employees in that department with that job title with gender ambiguous names, return the number of such employees and their employee data
-			if countEmployeeGenderUnclear>0:
-				print "Gender unlear for %s employees:" % (countEmployeeGenderUnclear)
+			if countEmployeeGenderUnclear[0]!=0:
+				print "Gender unclear for %s employees:" % (countEmployeeGenderUnclear)
 				print employeeGenderUnclear
 			#if there are any employees in that department with that job title with no gender data, return the number of such employees and their employee data
-			if countNoGenderData>0:
+			if countNoGenderData[0]!=0:
 				print "No gender data for %s employees:" % (countNoGenderData)
 				print noGenderData
 		#repeat all for department and job titles when the average female salary is at least %.50 more than the average male salary
-		if (averageMaleSalary[0]) and (averageFemaleSalary[0]) and (averageFemaleSalary[0]-averageMaleSalary[0] > .5):
+		elif (averageMaleSalary[0]) and (averageFemaleSalary[0]) and (averageFemaleSalary[0]-averageMaleSalary[0] > .5):
 			print "FLAG!!! THE MATRIARCHY LIVES HERE!"
 			print "%s, %s" %(dept[0],title[0])
 			print "Male Salary  %s, Number employed %s" %(averageMaleSalary, countMaleEmployees)
 			print "Female Salary  %s, Number employed %s" %(averageFemaleSalary, countFemaleEmployees)
 			disparity = averageFemaleSalary[0] - averageMaleSalary[0]
 			print "Wage disparity = $%s" % (disparity)
-			if countEmployeeGenderUnclear>0:
+			if countEmployeeGenderUnclear[0]!=0:
 				print "Gender unclear for %s employees:" % (countEmployeeGenderUnclear)
 				print employeeGenderUnclear
-			if countNoGenderData>0:
+			if countNoGenderData[0]!=0:
 				print "No gender data for %s employees:" % (countNoGenderData)
 				print noGenderData
 		#clear lists for next job title analysis
