@@ -41,12 +41,12 @@ salary.py queries doagender for unique job title's within each state department
 and flags titles/departments when the disparity between average male and average
 female salaries exceeds $.50 per hour. This flags instances where, on average, men
 make more than women and when women make more than men within the same job title and
-the same department. It also produces mitigating information like how many employees
-the average salaries are derived from and how many employees with that title in that
-department have names that have less than a 70 percent gender certainty. It also lists
-counts the number and lists the employees for whom gender data was not available, aka people with unusual names.
+the same department. It also produces mitigating information such as the number of employees
+that the average salaries are derived from and the number of employees with that title in that
+department with names that have less than a 70 percent gender certainty. It also
+counts and lists the employees for whom gender data was not available, aka people with unusual names.
 
 I wouldn't use this process to draw any hard conclusions. There is way too much error involved.
-37 percent of the employees in doa database had names for which there was no gender information.
+37 percent of the employees in the DOA database had names for which there was no gender information.
 But, I intend to use this as a good starting place for asking questions about cases where there
 appears to be a clear disparity in wage.
