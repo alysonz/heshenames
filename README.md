@@ -17,7 +17,7 @@ The above lists of names were copy and pasted into female.txt and male.txt. Thos
 doa.txt is the copy and paste product of the Arizona Deparment of Administration employee database. It is a snapshot of employment in the state from 7-29-2013. doa.txt was reformatted by doa.py into doanames.txt, which is just the first names of employees, for loading into mysql. I removed apostrophes from names because I didn't understand how to escape special characters yet.
 Similarly, I used currency.py to remove apostrophes and $ from doa.txt to get doafull.txt for loading into mysql. This was dumb, and I wouldn't do it again now that I know how to work around it, but I don't think it effected my results.
 
-sql.py matches each name in doanames.txt with gender information from femnames and malenames.txt and combines full employee information from doafull.txt with the matching gender information into a new table.
+sql.py matches each name in doanames.txt with gender information from femnames.txt and malenames.txt and combines full employee information from doafull.txt with the matching gender information into a new table.
 
 gender.py calculates the %maleness and %femaleness of each employees names where gender information is available and creates a new table with those added indexes called doagender.
 (Each name from the census database has information about how many people in the sample population own that name.
