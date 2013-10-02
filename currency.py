@@ -7,7 +7,6 @@ names = []
 for line in emp:
 	#find first comma, get rid of all text preceeding it
 	line = re.sub('\$','',line)
-	line = re.sub('\'','',line)
 	#find first tab or space, get rid of all text following it
 	names.append(line)
 empnames = open('doafull.txt','w')
