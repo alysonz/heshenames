@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 #reformat and label names
 import re
-emp = open('doa.txt', 'r')
+emp = open('doa12.txt', 'r')
 emp = emp.readlines()
 names = []
 for line in emp:
@@ -9,5 +9,5 @@ for line in emp:
 	line = re.sub('\$','',line)
 	#find first tab or space, get rid of all text following it
 	names.append(line)
-empnames = open('doafull.txt','w')
+empnames = open('doafull12.txt','w')
 empnames.writelines(names)
