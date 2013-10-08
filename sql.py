@@ -12,7 +12,7 @@ data = []
 #set end condition for d. start loop through all doanames
 while d < 38635:
 #first take id from doanames 1-38634
-	cursor.execute("select name from doanames where id=%s" %(d))
+	cursor.execute("select name from doanames13 where id=%s" %(d))
 	for this in cursor:
 		#store doaname in n
 		n = this
@@ -28,7 +28,7 @@ while d < 38635:
 		for stuff in line:
 			c.append(stuff)
 	#select row in employee information database where id matches the id of employee name in this iteration
-	cursor.execute("select * from doafull where id=%d" %(d))
+	cursor.execute("select * from doafull13 where id=%d" %(d))
 	#store employee info in k, convert tuple to list
 	for other in cursor:
 		k = other
@@ -43,7 +43,7 @@ while d < 38635:
 #establish query7 outside of for loop	
 query7 = 1
 #create table to load list data information	
-cursor.execute("create table final (id int(10), dept varchar(40), name varchar(40), title varchar(40), salary decimal (10,5), first varchar(10), gender varchar(2), percent decimal(10,5), percentile decimal(10,5), rank int(10), first2 varchar(10), gender2 varchar(2), percent2 decimal(10,5), percentile2 decimal(10,5), rank2 int(10))")
+cursor.execute("create table final13 (id int(10), dept varchar(40), name varchar(40), title varchar(40), salary decimal (10,5), first varchar(10), gender varchar(2), percent decimal(10,5), percentile decimal(10,5), rank int(10), first2 varchar(10), gender2 varchar(2), percent2 decimal(10,5), percentile2 decimal(10,5), rank2 int(10))")
 #normalize lists within data to contain placeholders for every column in query6 table
 for line in data:
 	if len(line) < 15:
@@ -53,7 +53,7 @@ for line in data:
 	if len(line) <> 15:
 		print line
 	#for each list within data, insert each item into each column in query6 table
-	cursor.execute("insert into final (id, dept, name, title, salary, first, gender, percent, percentile, rank, first2, gender2, percent2, percentile2, rank2) values(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)" ,(line[0], line[1], line[2], line[3], line[4], line[5], line[6], line[7], line[8], line[9], line[10], line[11], line[12], line[13], line[14]))
+	cursor.execute("insert into final13 (id, dept, name, title, salary, first, gender, percent, percentile, rank, first2, gender2, percent2, percentile2, rank2) values(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)" ,(line[0], line[1], line[2], line[3], line[4], line[5], line[6], line[7], line[8], line[9], line[10], line[11], line[12], line[13], line[14]))
 #write to heshenames database
 cnx.commit()
 print 'Success!'
