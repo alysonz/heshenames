@@ -7,7 +7,7 @@ dept = "you misspelled something somewhere"
 firstHighestSalary = "you misspelled something somewhere"
 firstHighest = []
 secondHighestSalary = "you misspelled something somewhere"
-secondHighest = "you misspelled something somewhere"
+secondHighest = []
 thirdHighestSalary = "you misspelled something somewhere"
 thirdHighest = "you misspelled something somewhere"
 fourthHighestSalary = "you misspelled something somewhere"
@@ -24,7 +24,8 @@ ninthHighestSalary = "you misspelled something somewhere"
 ninthHighest = "you misspelled something somewhere"
 tenthHighestSalary = "you misspelled something somewhere"
 tenthHighest = "you misspelled something somewhere"
-genericList = []
+hold = "you misspelled something somewhere"
+placeHolder = "you misspelled something somewhere"
 #create table to load data
 #cursor.execute("create table generic (generic1 varchar(#), generic2 decimal (#,#), generic3 int(#))")
 #find all distinct departments
@@ -41,13 +42,18 @@ for line in cursor:
 		firstHighest.append(placeHolder)
 	print firstHighest
 	if len(firstHighest)==1:
-		cursor.execute("select max(salary) from doafull13 where dept=%s and id!=%s",(dept[0],firstHighest[0][0]))
-		secondHighestSalary= gettuple.gettuple(cursor.fetchall())
-		cursor.execute("select * from doafull13 where salary=%s and dept=%s",(dept[0],secondHighestSalary[0]))
-		hold = cursor.fetchall()
-		for item in hold:
-			placeHolder = list(item)
-			secondHighest.append(placeHolder)
+		for line in firstHighest:
+			print 'pizza'
+			cursor.execute("select max(salary) from doafull13 where dept=%s and id!=%s",(dept[0],line[0]))
+			secondHighestSalary= gettuple.gettuple(cursor.fetchall())
+			print secondHighestSalary
+			cursor.execute("select * from doafull13 where salary=%s and dept=%s",(secondHighestSalary[0], dept[0]))
+			hold = cursor.fetchall()
+			print hold
+			for item in hold:
+				placeHolder = list(item)
+				secondHighest.append(placeHolder)
+				print 'taco'
 		print secondHighest
 #		else:
 #			secondHighest= gettuple.gettuple(hold)
