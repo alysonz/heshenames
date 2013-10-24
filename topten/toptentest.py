@@ -19,6 +19,8 @@ iterate = 1
 topTen = []
 hold = "you misspelled something somewhere"
 placeHolder = "you misspelled something somewhere"
+remainder = []
+count = []
 baseQuery = '"select max(salary) from doafull13 where dept=%s and id!=%s'
 #create table to load data
 #cursor.execute("create table generic (generic1 varchar(#), generic2 decimal (#,#), generic3 int(#))")
@@ -73,16 +75,17 @@ for line in cursor:
 			#find the employee/s with the fourth highest salary in that department
 			cursor.execute("select * from doafull13 where salary=%s and dept=%s",(highestSalary4[0], dept[0])
 			hold = cursor.fetchall()
-			#conditionally add that/those employee/s to the topTen list for that department
-
-#WAIT, DOES THIS MEAN THAT FOR EVERY EMPLOYEE IN HOLD I AM APPENDING THAT EMPLOYEE, ADDING THAT LIST TO TOPTEN, AND THEN DOING IT AGAIN? SO TOPTEN PLUS EMPLOYEE 1, TOPTEN PLUS EMPLOYEE 1 AND 2.... ETC?
-
-#WRITE A CONDITION THAT SAYS, IF ADDING EMPLOYEES WILL CAUSE TOPTEN TO EXCEED 10 ITEMS, THEN ADD UP UNTIL 10 ITEMS AND THEN COUNT HOW MANY ARE LEFT AND APPEND THAT AS THE LAST ITEM TO SHOW HOW MANY EMPLOYEES SHARE THAT SALARY
+			#add that/those employee/s to the topTen list for that department only until topTen containes ten items, then count the remainder and append that number to topTen
 			for item in hold:
-				placeHolder = []
-				placeHolder.append(list(item)) 
-				topTen = topTen + placeHolder
-
+				#THIS POTENTIALLY CREATES AN INFINITE IF ADDING ALL THE ITEMS FROM HOLD TO TOPTEN DOES NOT MAKE TOPTEN REACH 10 ITEMS IN LENGTH
+				while len(topTen) < 11:
+					placeHolder = []
+					placeHolder.append(list(item))
+					count.append(list(item)) 
+					topTen = topTen + placeHolder
+				if len(topTen) = 10:
+					remainder = list(len(hold)-len(count))
+					topTen.append(remainder)
 	#find the fifth highest salary in that department
 	if (len(topTen)<11):
 		#but only if there was a fourth highest salary
