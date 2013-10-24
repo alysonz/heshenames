@@ -55,17 +55,28 @@ for line in cursor:
 	#if there are fewer than ten employees in the topTen list for that department
 	if (len(topTen)<11):
 		#find the third highest salary in that department
-		cursor.execute("select max(salary) from doafull13 where dept=%s and salary!=%s or salary!=%s",(dept[0],highestSalary1[0],highestSalary2[0])
+		cursor.execute("select max(salary) from doafull13 where dept=%s and salary!=%s or salary!=%s",(dept[0],highestSalary1[0],highestSalary2[0]))
 		highestSalary3 = gettuple.gettuple(cursor.fetchall())
 		#find the employee/s with the third highest salary in that department, but only if there was a third highest salary
 		if len(highestSalary3)>0:
-			cursor.execute("select * from doafull13 where salary=%s and dept=%s",(highestSalary3[0], dept[0])
+			cursor.execute("select * from doafull13 where salary=%s and dept=%s",(highestSalary3[0], dept[0]))
 			hold = cursor.fetchall()
-			#add that/those employee/s to the topTen list for that department
-			for item in hold:
+			#add that/those employee/s to the topTen list for that department only until topTen containes ten items, then count the remainder and append that number to topTen
+			if (len(topTen)+len(hold)) < 11:
 				placeHolder = []
-				placeHolder.append(list(item))
+				for item in hold:
+					placeHolder.append(list(item))
 				topTen = topTen + placeHolder
+			elif (len(topTen)+len(hold)) > 10:
+				count = []
+				for item in hold:
+					while len(topTen) < 11:
+						placeHolder = []
+						count.append(list(item))
+						placeHolder.append(list(item))
+						topTen = topTen + placeHolder
+				remainder = list(len(hold)-len(count))
+				topTen.append(remainder)
 	#if there are still fewer than ten employees in the topTen list for that department, find the fourth highest salary in that department
 	if (len(topTen)<11):
 		#but only if there was a third highest salary
@@ -73,19 +84,24 @@ for line in cursor:
 			cursor.execute("select max(salary) from doafull13 where dept=%s and salary!=%s or salary!=%s or salary!=%s",(dept[0],highestSalary1[0],highestSalary2[0],highestSalary3[0])
 			highestSalary4 = gettuple.gettuple(cursor.fetchall())
 			#find the employee/s with the fourth highest salary in that department
-			cursor.execute("select * from doafull13 where salary=%s and dept=%s",(highestSalary4[0], dept[0])
+			cursor.execute("select * from doafull13 where salary=%s and dept=%s",(highestSalary4[0], dept[0]))
 			hold = cursor.fetchall()
 			#add that/those employee/s to the topTen list for that department only until topTen containes ten items, then count the remainder and append that number to topTen
-			for item in hold:
-				#THIS POTENTIALLY CREATES AN INFINITE IF ADDING ALL THE ITEMS FROM HOLD TO TOPTEN DOES NOT MAKE TOPTEN REACH 10 ITEMS IN LENGTH
-				while len(topTen) < 11:
-					placeHolder = []
+			if (len(topTen)+len(hold)) < 11:
+				placeHolder = []
+				for item in hold:
 					placeHolder.append(list(item))
-					count.append(list(item)) 
-					topTen = topTen + placeHolder
-				if len(topTen) = 10:
-					remainder = list(len(hold)-len(count))
-					topTen.append(remainder)
+				topTen = topTen + placeHolder
+			elif (len(topTen)+len(hold)) > 10:
+				count = []
+				for item in hold:
+					while len(topTen) < 11:
+						placeHolder = []
+						count.append(list(item))
+						placeHolder.append(list(item))
+						topTen = topTen + placeHolder
+				remainder = list(len(hold)-len(count))
+				topTen.append(remainder)
 	#find the fifth highest salary in that department
 	if (len(topTen)<11):
 		#but only if there was a fourth highest salary
@@ -93,15 +109,33 @@ for line in cursor:
 			cursor.execute("select max(salary) from doafull13 where dept=%s and salary!=%s or salary!=%s or salary!=%s or salary!=%s",(dept[0],highestSalary1[0],highestSalary2[0],highestSalary3[0],highestSalary4[0])
 			highestSalary5 = gettuple.gettuple(cursor.fetchall())
 			#find the employee/s with the fifth highest salary in that department
-			cursor.execute("select * from doafull13 where salary=%s and dept=%s",(highestSalary5[0], dept[0])
+			cursor.execute("select * from doafull13 where salary=%s and dept=%s",(highestSalary5[0], dept[0]))
 			hold = cursor.fetchall()
-			#add that/those employee/s to the topTen list for that department
-			for item in hold:
+			#add that/those employee/s to the topTen list for that department only until topTen containes ten items, then count the remainder and append that number to topTen
+			if (len(topTen)+len(hold)) < 11:
 				placeHolder = []
-				placeHolder.append(list(item))
+				for item in hold:
+					placeHolder.append(list(item))
 				topTen = topTen + placeHolder
+			elif (len(topTen)+len(hold)) > 10:
+				count = []
+				for item in hold:
+					while len(topTen) < 11:
+						placeHolder = []
+						count.append(list(item))
+						placeHolder.append(list(item))
+						topTen = topTen + placeHolder
+				remainder = list(len(hold)-len(count))
+				topTen.append(remainder)
+	#if topTen still has fewer than ten items, find the sixth highest salary in that department, but only if there was a fifth highest salary
+	if (len(topTen)<11):
+		if len(highestSalary5)>0:
+			cursor.execute("select max(salary) from doafull13 where dept=%s and salary!=%s or salary!=%s or salary!=%s or salary!=%s or salary!=%s",(dept[0],highestSalary1[0],highestSalary2[0],highestSalary3[0],highestSalary4[0],highestSalary5[0]))
+			highestSalary6 = gettuple.gettuple(cursor.fetchall())
+			#find the employee/s with the fifth highest salary in that department
+			cursor.execute("select * from doafull13 where salary=%s and dept=%s",(highestSalary6[0], dept[0]))
 			
-
+		
 
 
 
