@@ -38,7 +38,7 @@ for line in cursor:
 	#find the employee/s with the highest salary in that department
 	cursor.execute("select * from doafull13 where salary=%s and dept=%s",(highestSalary1[0],dept[0]))
 	hold = cursor.fetchall()
-	#add that/those employee/s to the topTen list for that department only until topTen containes ten items, then count the remainder and append that number to topTen
+	#add that/those employee/s to the topTen list for that department only until topTen contains ten items, then count the remainder and append that number to topTen
 	if len(hold) < 10:
 		for item in hold:
 			placeHolder.append(list(item))
@@ -63,7 +63,7 @@ for line in cursor:
 		if len(highestSalary2)>0:
 			cursor.execute("select * from doafull13 where salary=%s and dept=%s",(highestSalary2[0], dept[0]))
 			hold = cursor.fetchall()
-			#add that/those employee/s to the topTen list for that department only until topTen containes ten items, then count the remainder and append that number to topTen
+			#add that/those employee/s to the topTen list for that department only until topTen contains ten items, then count the remainder and append that number to topTen
 			if (len(topTen)+len(hold)) <= 10:
 				placeHolder = []
 				for item in hold:
@@ -91,7 +91,7 @@ for line in cursor:
 		if len(highestSalary3)>0:
 			cursor.execute("select * from doafull13 where salary=%s and dept=%s",(highestSalary3[0], dept[0]))
 			hold = cursor.fetchall()
-			#add that/those employee/s to the topTen list for that department only until topTen containes ten items, then count the remainder and append that number to topTen
+			#add that/those employee/s to the topTen list for that department only until topTen contains ten items, then count the remainder and append that number to topTen
 			if (len(topTen)+len(hold)) <= 10:
 				placeHolder = []
 				for item in hold:
@@ -119,7 +119,7 @@ for line in cursor:
 			#find the employee/s with the fourth highest salary in that department
 			cursor.execute("select * from doafull13 where salary=%s and dept=%s",(highestSalary4[0], dept[0]))
 			hold = cursor.fetchall()
-			#add that/those employee/s to the topTen list for that department only until topTen containes ten items, then count the remainder and append that number to topTen
+			#add that/those employee/s to the topTen list for that department only until topTen contains ten items, then count the remainder and append that number to topTen
 			if (len(topTen)+len(hold)) <= 10:
 				placeHolder = []
 				for item in hold:
@@ -147,7 +147,7 @@ for line in cursor:
 			#find the employee/s with the fifth highest salary in that department
 			cursor.execute("select * from doafull13 where salary=%s and dept=%s",(highestSalary5[0], dept[0]))
 			hold = cursor.fetchall()
-			#add that/those employee/s to the topTen list for that department only until topTen containes ten items, then count the remainder and append that number to topTen
+			#add that/those employee/s to the topTen list for that department only until topTen contains ten items, then count the remainder and append that number to topTen
 			if (len(topTen)+len(hold)) <= 10:
 				placeHolder = []
 				for item in hold:
@@ -174,7 +174,7 @@ for line in cursor:
 			#find the employee/s with the sixth highest salary in that department
 			cursor.execute("select * from doafull13 where salary=%s and dept=%s",(highestSalary6[0], dept[0]))
 			hold = cursor.fetchall()
-			#add that/those employee/s to the topTen list for that department only until topTen containes ten items, then count the remainder and append that number to topTen
+			#add that/those employee/s to the topTen list for that department only until topTen contains ten items, then count the remainder and append that number to topTen
 			if (len(topTen)+len(hold)) <= 10:
 				placeHolder = []
 				for item in hold:
@@ -201,7 +201,7 @@ for line in cursor:
 			#find the employee/s with the seventh highest salary in that department
 			cursor.execute("select * from doafull13 where salary=%s and dept=%s",(highestSalary7[0], dept[0]))
 			hold = cursor.fetchall()
-			#add that/those employee/s to the topTen list for that department only until topTen containes ten items, then count the remainder and append that number to topTen
+			#add that/those employee/s to the topTen list for that department only until topTen contains ten items, then count the remainder and append that number to topTen
 			if (len(topTen)+len(hold)) <= 10:
 				placeHolder = []
 				for item in hold:
@@ -228,7 +228,7 @@ for line in cursor:
 			#find the employee/s with the eighth highest salary in that department
 			cursor.execute("select * from doafull13 where salary=%s and dept=%s",(highestSalary8[0], dept[0]))
 			hold = cursor.fetchall()
-			#add that/those employee/s to the topTen list for that department only until topTen containes ten items, then count the remainder and append that number to topTen
+			#add that/those employee/s to the topTen list for that department only until topTen contains ten items, then count the remainder and append that number to topTen
 			if (len(topTen)+len(hold)) <= 10:
 				placeHolder = []
 				for item in hold:
@@ -255,7 +255,7 @@ for line in cursor:
 			#find the employee/s with the ninth highest salary in that department
 			cursor.execute("select * from doafull13 where salary=%s and dept=%s",(highestSalary9[0], dept[0]))
 			hold = cursor.fetchall()
-			#add that/those employee/s to the topTen list for that department only until topTen containes ten items, then count the remainder and append that number to topTen
+			#add that/those employee/s to the topTen list for that department only until topTen contains ten items, then count the remainder and append that number to topTen
 			if (len(topTen)+len(hold)) <= 10:
 				placeHolder = []
 				for item in hold:
@@ -282,7 +282,7 @@ for line in cursor:
 			#find the employee/s with the ninth highest salary in that department
 			cursor.execute("select * from doafull13 where salary=%s and dept=%s",(highestSalary10[0], dept[0]))
 			hold = cursor.fetchall()
-			#add that/those employee/s to the topTen list for that department only until topTen containes ten items, then count the remainder and append that number to topTen
+			#add that/those employee/s to the topTen list for that department only until topTen contains ten items, then count the remainder and append that number to topTen
 			if (len(topTen)+len(hold)) <= 10:
 				placeHolder = []
 				for item in hold:
@@ -301,10 +301,7 @@ for line in cursor:
 				remainder = len(hold)-len(count)
 				topTen.append(remainder)
 				print "10b"
-	if len(topTen) < 10:
-		problems.append(topTen[0][1])
-		problems.append(len(topTen))
-print problems
+	print topTen
 	#load data to table
 	#cursor.execute("insert into generic (generic1, generic2, generic3) values(%s, %s, %s)" ,(genericList[0], genericList[1], genericList[2]))
 	#clear lists for next job title analysis
